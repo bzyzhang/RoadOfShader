@@ -1,13 +1,13 @@
 ﻿//https://www.jianshu.com/p/7cbae91e88d1
 
-Shader "RoadOfShader/1.0-VertexAnimation/Squash"
+Shader "RoadOfShader/1.0-VertexAnimation/Hide In Door"
 {
     Properties
     {
         _MainTex ("Texture", 2D) = "white" { }
         _TopY ("Top Y", Float) = 1
         _BottomY ("Bottom Y", Float) = 0
-        _Control ("Control", Range(0, 1)) = 0
+        _Control ("Control", Range(0, 2)) = 0
     }
     SubShader
     {
@@ -40,6 +40,7 @@ Shader "RoadOfShader/1.0-VertexAnimation/Squash"
             struct Varyings
             {
                 float2 uv: TEXCOORD0;
+                float3 positionWS: TEXCOORD1;
                 float4 vertex: SV_POSITION;
                 UNITY_VERTEX_INPUT_INSTANCE_ID
                 UNITY_VERTEX_OUTPUT_STEREO
@@ -73,10 +74,11 @@ Shader "RoadOfShader/1.0-VertexAnimation/Squash"
                 float3 positionWS = TransformObjectToWorld(input.positionOS.xyz);
                 float normalizeDist = GetNormalizeDist(positionWS.y);
                 
-                float3 localNegativeY = TransformWorldToObjectDir(float3(0, -1, 0));
+                float3 localNegativeY = TransformWorldToObjectDir(float3(0, 1, 0));
                 float value = saturate(_Control - normalizeDist);
                 input.positionOS.xyz += localNegativeY * value;
                 
+                output.positionWS = TransformObjectToWorld(input.positionOS.xyz);
                 output.vertex = TransformObjectToHClip(input.positionOS.xyz);
                 output.uv = TRANSFORM_TEX(input.uv, _MainTex);
                 
@@ -87,6 +89,8 @@ Shader "RoadOfShader/1.0-VertexAnimation/Squash"
             {
                 UNITY_SETUP_INSTANCE_ID(input);
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
+                
+                clip(_TopY - input.positionWS.y);
                 
                 half4 col = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, input.uv);
                 return col;
