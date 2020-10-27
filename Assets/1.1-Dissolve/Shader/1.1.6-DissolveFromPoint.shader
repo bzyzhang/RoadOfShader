@@ -9,7 +9,7 @@ Shader "RoadOfShader/1.1-Dissolve/Dissolve From Point"
         _Threshold ("Threshold", Range(0, 1)) = 0
         _EdgeLength ("Edge Length", Range(0.0, 0.2)) = 0.1
         _RampTex ("Ramp Tex", 2D) = "white" { }
-        _StartPoint("Start Point",Vector) = (1,1,1,1)
+        _StartPoint("Start Point",Vector) = (1,1,1,1)   //需要找到该点的世界坐标
         _MaxDistance("Max Distance",Float) = 0
         _DistanceEffect("Distance Effect",Range(0,1)) = 0.5
     }
