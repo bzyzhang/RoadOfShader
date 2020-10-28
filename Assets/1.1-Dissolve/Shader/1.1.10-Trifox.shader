@@ -82,8 +82,8 @@ Shader "RoadOfShader/1.1-Dissolve/Trifox"
                 UNITY_SETUP_INSTANCE_ID(input);
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
                 
-                float toCamera = distance(input.positionWS, _MainLightPosition.xyz);
-                float playerToCamera = distance(_PlayerPos.xyz, _MainLightPosition.xyz);
+                float toCamera = distance(input.positionWS, _WorldSpaceCameraPos);
+                float playerToCamera = distance(_PlayerPos.xyz, _WorldSpaceCameraPos);
                 
                 float2 wcoord = input.positionNDC.xy / input.positionNDC.w;
                 float mask = SAMPLE_TEXTURE2D(_ScreenSpaceMaskTex, sampler_ScreenSpaceMaskTex, wcoord).r;
