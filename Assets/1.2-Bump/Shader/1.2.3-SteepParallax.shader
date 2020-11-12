@@ -70,7 +70,7 @@ Shader "RoadOfShader/1.2-Bump/Steep Parallax"
             {
                 float3 viewDir = normalize(viewDir_tangent);
 
-                float layerNum = lerp(_MaxLayerNum, _MinLayerNum, abs(dot(float3(0, 0, 1), viewDir)));
+                float layerNum = lerp(_MaxLayerNum, _MinLayerNum, abs(dot(float3(0, 0, 1), viewDir)));//一点优化：根据视角来决定分层数
                 float layerDepth = 1.0 / layerNum;
                 float currentLayerDepth = 0.0;
                 float2 deltaTexCoords = viewDir.xy / viewDir.z / layerNum * _HeightScale;
@@ -78,9 +78,13 @@ Shader "RoadOfShader/1.2-Bump/Steep Parallax"
                 float2 currentTexCoords = uv;
                 float currentDepthMapValue = SAMPLE_TEXTURE2D(_DepthMap, sampler_DepthMap, currentTexCoords).r;
 
+                //unable to unroll loop, loop does not appear to terminate in a timely manner
+                //上面这个错误是在循环内使用SAMPLE_TEXTURE2D导致的，需要加上unroll来限制循环次数或者改用SAMPLE_TEXTURE2D_LOD
+                // [unroll(100)]
                 while(currentLayerDepth < currentDepthMapValue)
                 {
                     currentTexCoords -= deltaTexCoords;
+                    // currentDepthMapValue = SAMPLE_TEXTURE2D(_DepthMap, sampler_DepthMap, currentTexCoords).r;
                     currentDepthMapValue = SAMPLE_TEXTURE2D_LOD(_DepthMap, sampler_DepthMap, currentTexCoords, 0).r;
                     currentLayerDepth += layerDepth;
                 }
