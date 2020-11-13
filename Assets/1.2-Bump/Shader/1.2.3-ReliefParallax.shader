@@ -92,7 +92,7 @@ Shader "RoadOfShader/1.2-Bump/Relief Parallax"
                 float halfLayerDepth = layerDepth / 2;
 
                 currentTexCoords += halfDeltaUV;
-                currentLayerDepth += halfLayerDepth;
+                currentLayerDepth -= halfLayerDepth;
 
                 int numSearches = 5;
                 for (int i = 0; i < numSearches; i ++)
