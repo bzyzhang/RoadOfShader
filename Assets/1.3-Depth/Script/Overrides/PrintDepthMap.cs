@@ -6,7 +6,7 @@ namespace UnityEngine.Rendering.Universal
     public sealed class PrintDepthMap : VolumeComponent, IPostProcessComponent
     {
         [Tooltip("是否开启效果")]
-        public BoolParameter enableEffect = new BoolParameter(true);
+        public BoolParameter enableEffect = new BoolParameter(false);
 
         public bool IsActive() => enableEffect == true;
 
