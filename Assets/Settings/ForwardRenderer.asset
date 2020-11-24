@@ -28,7 +28,8 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: 1220519629729202445}
   - {fileID: -8965661640249034211}
-  m_RendererFeatureMap: 0d8166fb2228f0101d3a9c843d929383
+  - {fileID: 6297225268401152306}
+  m_RendererFeatureMap: 0d8166fb2228f0101d3a9c843d9293833221aa79043d6457
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   shaders:
     blitPS: {fileID: 4800000, guid: c17132b1f77d20942aa75f8429c0f8bc, type: 3}
@@ -62,5 +63,18 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: babe8a54d517688438a8942d23442d14, type: 3}
   m_Name: NewPrintDepthMapRendererFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+--- !u!114 &6297225268401152306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16ad17c8df7aa2646b4da02672bf37fd, type: 3}
+  m_Name: NewScanLineRendererFeature
   m_EditorClassIdentifier: 
   m_Active: 1
