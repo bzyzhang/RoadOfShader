@@ -26,6 +26,19 @@ MonoBehaviour:
   m_Name: NewEdgeDetectionRendererFeature
   m_EditorClassIdentifier: 
   m_Active: 1
+--- !u!114 &-7523411352687484597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 157630334da3f89448319c1672db4b8e, type: 3}
+  m_Name: NewCustomDepthOfFieldRendererFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
 --- !u!114 &-3512380828997055356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,7 +85,8 @@ MonoBehaviour:
   - {fileID: -3512380828997055356}
   - {fileID: -8796018566085902228}
   - {fileID: -2716282709401276873}
-  m_RendererFeatureMap: 0d8166fb2228f0101d3a9c843d9293833221aa79043d64570c087d548afe1535840cbdd33e8441cf6c80b5aab743ee8537ee996c44d34dda
+  - {fileID: -7523411352687484597}
+  m_RendererFeatureMap: 0d8166fb2228f0101d3a9c843d9293833221aa79043d64570c087d548afe1535840cbdd33e8441cf6c80b5aab743ee8537ee996c44d34dda4be1eb473c799797
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   shaders:
     blitPS: {fileID: 4800000, guid: c17132b1f77d20942aa75f8429c0f8bc, type: 3}
