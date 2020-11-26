@@ -8,6 +8,8 @@ using UnityEngine;
 public class SimpleObject
 {
     public string Name;
+    public PrimitiveType Type;
+    public int siblingIndex;
     public Vector3 Position;
     public Vector3 EulerAngles;
     public Vector3 Scale;
@@ -33,9 +35,16 @@ public class SceneHelper
             if (transform.parent != null)
                 continue;
 
+            PrimitiveType primitiveType = PrimitiveType.Cube;
+            var meshFilter = transform.GetComponent<MeshFilter>();
+            if (meshFilter != null)
+                primitiveType = ConvertToPrimitiveType(meshFilter.sharedMesh.name);
+
             SimpleObject simpleObject = new SimpleObject
             {
                 Name = transform.name,
+                Type = primitiveType,
+                siblingIndex = transform.GetSiblingIndex(),
                 Position = transform.position,
                 EulerAngles = transform.eulerAngles,
                 Scale = transform.localScale
@@ -43,12 +52,18 @@ public class SceneHelper
             objects.Add(simpleObject);
         }
 
+        objects.Sort((a, b) =>
+        {
+            int o = a.siblingIndex - b.siblingIndex;
+            return o;
+        });
+
         SimpleObjects SimpleObjects = new SimpleObjects
         {
             Objects = objects
         };
 
-        var objectsJson = JsonUtility.ToJson(SimpleObjects,true);
+        var objectsJson = JsonUtility.ToJson(SimpleObjects, true);
 
         var filePath = string.Format($"{Application.dataPath}/{FILE_NAME}");
 
@@ -57,7 +72,7 @@ public class SceneHelper
             File.Create(filePath);
         }
 
-        File.WriteAllText(filePath,objectsJson);
+        File.WriteAllText(filePath, objectsJson);
     }
 
     [MenuItem("Tools/InstantiteObjects")]
@@ -76,17 +91,17 @@ public class SceneHelper
 
         foreach (var item in objects.Objects)
         {
-            if(item.Name.IndexOf("Main Camera") >= 0)
+            if (item.Name.IndexOf("Main Camera") >= 0)
             {
                 var camera = GameObject.Find("Main Camera");
-                if(camera)
+                if (camera)
                 {
                     camera.transform.position = item.Position;
                     camera.transform.eulerAngles = item.EulerAngles;
                     camera.transform.localScale = item.Scale;
                 }
             }
-            else if(item.Name.IndexOf("Directional Light") >= 0)
+            else if (item.Name.IndexOf("Directional Light") >= 0)
             {
                 var light = GameObject.Find("Directional Light");
                 if (light)
@@ -98,8 +113,7 @@ public class SceneHelper
             }
             else
             {
-                var primitiveType = ConvertToPrimitiveType(item.Name);
-                var primitive = GameObject.CreatePrimitive(primitiveType);
+                var primitive = GameObject.CreatePrimitive(item.Type);
                 primitive.name = item.Name;
                 primitive.transform.position = item.Position;
                 primitive.transform.eulerAngles = item.EulerAngles;
@@ -112,7 +126,7 @@ public class SceneHelper
     {
         PrimitiveType primitiveType = PrimitiveType.Cube;
 
-        if(name.IndexOf("Sphere")  >= 0)
+        if (name.IndexOf("Sphere") >= 0)
         {
             primitiveType = PrimitiveType.Sphere;
         }
