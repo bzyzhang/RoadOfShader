@@ -39,6 +39,19 @@ MonoBehaviour:
   m_Name: NewVerticalFogRendererFeature
   m_EditorClassIdentifier: 
   m_Active: 1
+--- !u!114 &-2716282709401276873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cc1d855e5e29a341a684eb2b1198e4f, type: 3}
+  m_Name: NewCustomMotionBlurRendererFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,7 +71,8 @@ MonoBehaviour:
   - {fileID: 3825243328597526540}
   - {fileID: -3512380828997055356}
   - {fileID: -8796018566085902228}
-  m_RendererFeatureMap: 0d8166fb2228f0101d3a9c843d9293833221aa79043d64570c087d548afe1535840cbdd33e8441cf6c80b5aab743ee85
+  - {fileID: -2716282709401276873}
+  m_RendererFeatureMap: 0d8166fb2228f0101d3a9c843d9293833221aa79043d64570c087d548afe1535840cbdd33e8441cf6c80b5aab743ee8537ee996c44d34dda
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   shaders:
     blitPS: {fileID: 4800000, guid: c17132b1f77d20942aa75f8429c0f8bc, type: 3}
