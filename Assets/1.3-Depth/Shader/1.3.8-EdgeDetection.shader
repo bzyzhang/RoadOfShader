@@ -41,7 +41,7 @@ Shader "RoadOfShader/1.3-Depth/Edge Detection"
             
             struct Varyings
             {
-                float2 uv[4]: TEXCOORD0;
+                float2 uv[5]: TEXCOORD0;
                 float4 vertex: SV_POSITION;
                 UNITY_VERTEX_INPUT_INSTANCE_ID
                 UNITY_VERTEX_OUTPUT_STEREO
@@ -51,6 +51,8 @@ Shader "RoadOfShader/1.3-Depth/Edge Detection"
             float4 _MainTex_TexelSize;
             float _EdgeThreshold;
             CBUFFER_END
+
+            TEXTURE2D(_MainTex);    SAMPLER(sampler_MainTex);
             
             Varyings vert(Attributes input)
             {
@@ -69,11 +71,12 @@ Shader "RoadOfShader/1.3-Depth/Edge Detection"
                     uv.y = 1 - uv.y; //满足上面两个条件时uv会翻转，因此需要转回来
                 #endif
                 
-				//Robers算子
-				output.uv[0] = uv + _MainTex_TexelSize.xy * float2(-1, -1);
-				output.uv[1] = uv + _MainTex_TexelSize.xy * float2(-1, 1);
-				output.uv[2] = uv + _MainTex_TexelSize.xy * float2(1, -1);
-				output.uv[3] = uv + _MainTex_TexelSize.xy * float2(1, 1);
+                output.uv[0] = uv;
+                //Robers算子
+                output.uv[1] = uv + _MainTex_TexelSize.xy * float2(-1, -1);
+                output.uv[2] = uv + _MainTex_TexelSize.xy * float2(-1, 1);
+                output.uv[3] = uv + _MainTex_TexelSize.xy * float2(1, -1);
+                output.uv[4] = uv + _MainTex_TexelSize.xy * float2(1, 1);
                 
                 return output;
             }
@@ -82,11 +85,13 @@ Shader "RoadOfShader/1.3-Depth/Edge Detection"
             {
                 UNITY_SETUP_INSTANCE_ID(input);
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
+
+                half4 col = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, input.uv[0]);
                 
-                float sample1 = Linear01Depth(SampleSceneDepth(input.uv[0]), _ZBufferParams);
-                float sample2 = Linear01Depth(SampleSceneDepth(input.uv[1]), _ZBufferParams);
-                float sample3 = Linear01Depth(SampleSceneDepth(input.uv[2]), _ZBufferParams);
-                float sample4 = Linear01Depth(SampleSceneDepth(input.uv[3]), _ZBufferParams);
+                float sample1 = Linear01Depth(SampleSceneDepth(input.uv[1]), _ZBufferParams);
+                float sample2 = Linear01Depth(SampleSceneDepth(input.uv[2]), _ZBufferParams);
+                float sample3 = Linear01Depth(SampleSceneDepth(input.uv[3]), _ZBufferParams);
+                float sample4 = Linear01Depth(SampleSceneDepth(input.uv[4]), _ZBufferParams);
                 
                 float edge = 1.0;
                 //对角线的差异相乘
@@ -94,6 +99,7 @@ Shader "RoadOfShader/1.3-Depth/Edge Detection"
                 edge *= abs(sample2 - sample3) < _EdgeThreshold ? 1.0: 0.0;
                 
                 return edge;
+                // return lerp(0, col, edge);  //描边
             }
             ENDHLSL
             

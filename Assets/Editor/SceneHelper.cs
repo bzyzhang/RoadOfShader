@@ -30,6 +30,9 @@ public class SceneHelper
 
         foreach (Transform transform in UnityEngine.Object.FindObjectsOfType(typeof(Transform)))
         {
+            if (transform.parent != null)
+                continue;
+
             SimpleObject simpleObject = new SimpleObject
             {
                 Name = transform.name,
