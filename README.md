@@ -11,3 +11,4 @@ Unity版本：Unity 2020.1.4f1
 1. [顶点动画](https://bzyzhang.github.io/bzyzhang.github.io/2020/11/28/2020-11-28-%EF%BC%88%E4%B8%80%EF%BC%89%E9%A1%B6%E7%82%B9%E5%8A%A8%E7%94%BB/)
 2. [消融效果](https://bzyzhang.github.io/bzyzhang.github.io/2020/11/28/2020-11-28-%EF%BC%88%E4%BA%8C%EF%BC%89%E6%B6%88%E8%9E%8D%E6%95%88%E6%9E%9C/)
 3. [表面凹凸技术](https://bzyzhang.github.io/bzyzhang.github.io/2020/11/29/2020-11-29-%EF%BC%88%E4%B8%89%EF%BC%89%E8%A1%A8%E9%9D%A2%E5%87%B9%E5%87%B8%E6%8A%80%E6%9C%AF/)
+4. [深度图基础及应用](https://bzyzhang.github.io/bzyzhang.github.io/2020/12/01/2020-12-01-%EF%BC%88%E5%9B%9B%EF%BC%89%E6%B7%B1%E5%BA%A6%E5%9B%BE%E5%9F%BA%E7%A1%80%E5%8F%8A%E5%BA%94%E7%94%A8/)
