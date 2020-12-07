@@ -49,7 +49,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AlphaClip: 0
-    - _Antialias: 0.001
+    - _Antialias: 0.0055
     - _Blend: 0
     - _BumpScale: 1
     - _Cull: 2
@@ -76,7 +76,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _StartEnd: {r: 0.1, g: 0, b: 0.6, a: 1}
+    - _StartEnd: {r: 0.5, g: 0.5, b: 0.37, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &6449849028193292161
 MonoBehaviour:
