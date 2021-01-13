@@ -61,7 +61,7 @@
 				//沿顶点方向进行偏移
                 float3 dir = TransformObjectToWorldDir(input.positionOS.xyz);
 				float2 offset = TransformWorldToHClipDir(dir).xy;
-				output.vertex.xy += offset * output.vertex.z * _Outline;
+				output.vertex.xy += offset * output.vertex.w * _Outline;
                 
                 return output;
             }
@@ -80,7 +80,7 @@
         //MainColor Pass
         Pass
         {
-            //Tags { "LightMode" = "UniversalForward" }
+            Tags { "LightMode" = "SRPDefaultUnlit" }
             
             HLSLPROGRAM
             

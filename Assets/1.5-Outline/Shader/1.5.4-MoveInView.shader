@@ -61,7 +61,7 @@
                 
                 float3 normal = TransformObjectToWorldNormal(input.normalOS);
                 float2 offset = TransformWorldToHClipDir(normal).xy; //只用与屏幕位置有关的xy分量来偏移从而使轮廓大小与摄像机的位置无关
-                output.vertex.xy += offset * output.vertex.z * _Outline;
+                output.vertex.xy += offset * output.vertex.w * _Outline;
                 
                 return output;
             }
@@ -80,7 +80,7 @@
         //MainColor Pass
         Pass
         {
-            //Tags { "LightMode" = "UniversalForward" }
+            Tags { "LightMode" = "SRPDefaultUnlit" }
             
             HLSLPROGRAM
             

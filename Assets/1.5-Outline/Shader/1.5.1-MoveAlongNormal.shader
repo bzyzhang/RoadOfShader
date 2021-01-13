@@ -13,7 +13,7 @@
         //Outline Pass
         Pass
         {
-            Tags { "LightMode" = "SRPDefaultUnlit" }
+            Tags { "LightMode" = "UniversalForward" }
             Cull Front
             ZWrite On
             
@@ -77,7 +77,7 @@
         //MainColor Pass
         Pass
         {
-            Tags { "LightMode" = "UniversalForward" }
+            Tags { "LightMode" = "SRPDefaultUnlit" }
             
             HLSLPROGRAM
             
