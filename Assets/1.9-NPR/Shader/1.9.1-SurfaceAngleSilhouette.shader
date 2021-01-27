@@ -85,8 +85,10 @@
                 half3 viewDirWS = normalize(GetCameraPositionWS() - input.positionWS);
                 
                 half3 edge = SurfaceAngleSilhouette(normalWS, viewDirWS);
+
+                half3 albedo = SAMPLE_TEXTURE2D(_MainTex,sampler_MainTex,input.uv).rgb;
                 
-                half4 col = half4(edge, 1.0);
+                half4 col = half4(albedo * edge, 1.0);
                 return col;
             }
             ENDHLSL
