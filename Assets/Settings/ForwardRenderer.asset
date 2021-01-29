@@ -1,83 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8965661640249034211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 324c5de073736ed4abb2999617a3438a, type: 3}
-  m_Name: NewFogRendererFeature
-  m_EditorClassIdentifier: 
-  m_Active: 1
---- !u!114 &-8796018566085902228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 151c46154144a554eb96b2c2181c8456, type: 3}
-  m_Name: NewEdgeDetectionRendererFeature
-  m_EditorClassIdentifier: 
-  m_Active: 1
---- !u!114 &-7523411352687484597
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 157630334da3f89448319c1672db4b8e, type: 3}
-  m_Name: NewCustomDepthOfFieldRendererFeature
-  m_EditorClassIdentifier: 
-  m_Active: 1
---- !u!114 &-3512380828997055356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2860f975b45c0b4abc90064212e05df, type: 3}
-  m_Name: NewVerticalFogRendererFeature
-  m_EditorClassIdentifier: 
-  m_Active: 1
---- !u!114 &-2716282709401276873
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cc1d855e5e29a341a684eb2b1198e4f, type: 3}
-  m_Name: NewCustomMotionBlurRendererFeature
-  m_EditorClassIdentifier: 
-  m_Active: 1
---- !u!114 &-1061573929234233743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b6c038e2ef8d8d469c78b411879f2a6, type: 3}
-  m_Name: DepthNormals
-  m_EditorClassIdentifier: 
-  m_Active: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,18 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de640fe3d0db1804a85f9fc8f5cadab6, type: 3}
   m_Name: ForwardRenderer
   m_EditorClassIdentifier: 
-  m_RendererFeatures:
-  - {fileID: 1220519629729202445}
-  - {fileID: -8965661640249034211}
-  - {fileID: 6297225268401152306}
-  - {fileID: 3825243328597526540}
-  - {fileID: -3512380828997055356}
-  - {fileID: -8796018566085902228}
-  - {fileID: -2716282709401276873}
-  - {fileID: -7523411352687484597}
-  - {fileID: -1061573929234233743}
-  - {fileID: 1663105066963418249}
-  m_RendererFeatureMap: 0d8166fb2228f0101d3a9c843d9293833221aa79043d64570c087d548afe1535840cbdd33e8441cf6c80b5aab743ee8537ee996c44d34dda4be1eb473c79979771862dc5228844f189bc81343f891417
+  m_RendererFeatures: []
+  m_RendererFeatureMap: 
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   shaders:
     blitPS: {fileID: 4800000, guid: c17132b1f77d20942aa75f8429c0f8bc, type: 3}
@@ -123,56 +35,4 @@ MonoBehaviour:
     passOperation: 0
     failOperation: 0
     zFailOperation: 0
-  m_ShadowTransparentReceive: 1
---- !u!114 &1220519629729202445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: babe8a54d517688438a8942d23442d14, type: 3}
-  m_Name: NewPrintDepthMapRendererFeature
-  m_EditorClassIdentifier: 
-  m_Active: 1
---- !u!114 &1663105066963418249
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0f6cf05d3b522a45b0d1716aec05765, type: 3}
-  m_Name: DisplayNormalTexturePassFeature
-  m_EditorClassIdentifier: 
-  m_Active: 1
---- !u!114 &3825243328597526540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 623dcd7a198ce1245bfacced326f2086, type: 3}
-  m_Name: NewWaterFloodedRendererFeature
-  m_EditorClassIdentifier: 
-  m_Active: 1
---- !u!114 &6297225268401152306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16ad17c8df7aa2646b4da02672bf37fd, type: 3}
-  m_Name: NewScanLineRendererFeature
-  m_EditorClassIdentifier: 
-  m_Active: 1
+  m_ShadowTransparentReceive: 0
