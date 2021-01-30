@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: NewCommonRendererFeature
   m_EditorClassIdentifier: 
   m_Active: 1
-  UsedMaterial: {fileID: 2100000, guid: f07d5ddc7ceb4b148aa02f1db98b40f2, type: 2}
+  UsedMaterial: {fileID: 2100000, guid: 53de0a86eb0eaa640b4c81cdc1c92f29, type: 2}
   PassEvent: 600
 --- !u!114 &11400000
 MonoBehaviour:
