@@ -5,7 +5,7 @@ namespace UnityEngine.Experiemntal.Rendering.Universal
 {
     public class CommonPass : ScriptableRenderPass
     {
-        static readonly string k_RenderTag = "Common";
+        static readonly string k_RenderTag = "Common PostProcessing";
 
         private Material m_Material;
 
@@ -21,7 +21,6 @@ namespace UnityEngine.Experiemntal.Rendering.Universal
         {
             if (m_Material == null)
             {
-                UnityEngine.Debug.LogError("材质没找到！");
                 return;
             }
             if (!renderingData.cameraData.postProcessEnabled) return;
@@ -37,6 +36,7 @@ namespace UnityEngine.Experiemntal.Rendering.Universal
             if (renderingData.cameraData.isSceneViewCamera) return;
 
             var source = currentTarget;
+            cmd.SetGlobalTexture("_MainTex", source);
 
             Blit(cmd, source, destination.Identifier(), m_Material);
         }
