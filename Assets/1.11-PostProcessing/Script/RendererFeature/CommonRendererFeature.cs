@@ -5,7 +5,7 @@ using UnityEngine.Rendering.Universal;
 public class CommonRendererFeature : ScriptableRendererFeature
 {
     public Material UsedMaterial;
-    public RenderPassEvent PassEvent;
+    public RenderPassEvent PassEvent = RenderPassEvent.BeforeRenderingPostProcessing;
 
     CommonPass m_ScriptablePass;
 

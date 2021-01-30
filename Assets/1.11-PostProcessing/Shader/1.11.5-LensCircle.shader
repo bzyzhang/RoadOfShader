@@ -2,6 +2,7 @@
 {
     Properties
     {
+        _MainTex ("Main Tex", 2D) = "white" { }
         _InnerRadius ("Inner Radius", Range(0, 1)) = 0.4
         _OuterRadius ("Outer Radius", Range(0, 1)) = 0.5
     }

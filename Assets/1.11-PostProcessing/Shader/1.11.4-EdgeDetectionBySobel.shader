@@ -5,6 +5,7 @@ Shader "RoadOfShader/1.11-PostProcessing/Edge Detection By Sobel"
 {
     Properties
     {
+        _MainTex ("Main Tex", 2D) = "white" { }
         _Hardness ("Hardness", Range(0, 5)) = 1
     }
     SubShader

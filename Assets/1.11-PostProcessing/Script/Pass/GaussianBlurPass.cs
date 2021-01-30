@@ -12,12 +12,11 @@ namespace UnityEngine.Experiemntal.Rendering.Universal
 
         private Material gaussianBlurMat;
 
-        private int bufferTex0 = 0;
-        private int bufferTex1 = 0;
+        private RenderTargetHandle bufferTex0;
+        private RenderTargetHandle bufferTex1;
 
         RenderTargetIdentifier currentTarget;
         private RenderTargetHandle destination { get; set; }
-        private RenderTextureDescriptor m_Descriptor;
 
         public GaussianBlurPass(int downSample, int iterations)
         {
@@ -27,8 +26,8 @@ namespace UnityEngine.Experiemntal.Rendering.Universal
             var shader = Shader.Find("RoadOfShader/1.11-PostProcessing/Gaussian Blur");
             gaussianBlurMat = CoreUtils.CreateEngineMaterial(shader);
 
-            bufferTex0 = Shader.PropertyToID("_GaussianBlur0");
-            bufferTex1 = Shader.PropertyToID("_GaussianBlur1");
+            bufferTex0.Init("_GaussianBlur0");
+            bufferTex1.Init("_GaussianBlur1");
         }
 
         public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
@@ -52,36 +51,41 @@ namespace UnityEngine.Experiemntal.Rendering.Universal
 
             var source = currentTarget;
 
-            int w = m_Descriptor.width / m_DownSample;
-            int h = m_Descriptor.height / m_DownSample;
+            RenderTextureDescriptor opaqueDesc = renderingData.cameraData.cameraTargetDescriptor;
 
-            cmd.GetTemporaryRT(bufferTex0, w, h, m_Descriptor.depthBufferBits, FilterMode.Bilinear);
-            cmd.GetTemporaryRT(bufferTex1, w, h, m_Descriptor.depthBufferBits, FilterMode.Bilinear);
+            opaqueDesc.width /= m_DownSample;
 
-            cmd.SetGlobalTexture("_MainTex", source);
-            Blit(cmd, source, bufferTex0);
+            opaqueDesc.height /= m_DownSample;
+
+            opaqueDesc.depthBufferBits = 0;
+
+            cmd.GetTemporaryRT(bufferTex0.id, opaqueDesc, FilterMode.Bilinear);
+            cmd.GetTemporaryRT(bufferTex1.id, opaqueDesc, FilterMode.Bilinear);
+
+            Blit(cmd, source, bufferTex0.Identifier());
 
             for (int i = 0; i < m_Iterations; i++)
             {
-                cmd.SetGlobalTexture("_MainTex", bufferTex0);
-                Blit(cmd, bufferTex0, bufferTex1, gaussianBlurMat, 0);
+                Blit(cmd, bufferTex0.Identifier(), bufferTex1.Identifier(), gaussianBlurMat, 0);
 
-                cmd.SetGlobalTexture("_MainTex", bufferTex1);
-                Blit(cmd, bufferTex1, bufferTex0, gaussianBlurMat, 1);
+                Blit(cmd, bufferTex1.Identifier(), bufferTex0.Identifier(), gaussianBlurMat, 1);
             }
 
-            cmd.ReleaseTemporaryRT(bufferTex1);
-
-            Blit(cmd, bufferTex0, destination.Identifier());
-
-            cmd.ReleaseTemporaryRT(bufferTex0);
+            Blit(cmd, bufferTex0.Identifier(), source);
         }
 
-        public void Setup(in RenderTargetIdentifier currentTarget, RenderTargetHandle dest, RenderTextureDescriptor descriptor)
+        public override void FrameCleanup(CommandBuffer cmd)
+        {
+            base.FrameCleanup(cmd);
+
+            cmd.ReleaseTemporaryRT(bufferTex0.id);
+            cmd.ReleaseTemporaryRT(bufferTex1.id);
+        }
+
+        public void Setup(in RenderTargetIdentifier currentTarget, RenderTargetHandle dest)
         {
             this.destination = dest;
             this.currentTarget = currentTarget;
-            this.m_Descriptor = descriptor;
         }
     }
 }

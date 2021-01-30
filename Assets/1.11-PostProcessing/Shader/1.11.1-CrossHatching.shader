@@ -1,5 +1,10 @@
 ﻿Shader "RoadOfShader/1.11-PostProcessing/Cross Hatching"
 {
+    Properties
+    {
+        _MainTex("Main Tex", 2D) = "white" { }
+    }
+
     SubShader
     {
         Tags { "Queue" = "Geometry" "RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline" "IgnoreProjector" = "True" }

@@ -2,6 +2,7 @@
 {
     Properties
     {
+        _MainTex ("Main Tex", 2D) = "white" { }
         _Brightness ("Brightness", Float) = 1
         _Saturation ("Saturation", Float) = 1
         _Contrast ("Contrast", Float) = 1

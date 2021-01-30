@@ -1,6 +1,11 @@
 ﻿//热视图（只是模拟，因为真的实现需要热量图）
 Shader "RoadOfShader/1.11-PostProcessing/Thermal Vision"
 {
+    Properties
+    {
+        _MainTex ("Main Tex", 2D) = "white" { }
+    }
+    
     SubShader
     {
         Tags { "Queue" = "Geometry" "RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline" "IgnoreProjector" = "True" }

@@ -2,6 +2,7 @@
 {
     Properties
     {
+        _MainTex ("Main Tex", 2D) = "white" { }
         _BlurLevel ("Blur Level", Float) = 1
     }
     SubShader

@@ -2,6 +2,7 @@
 {
     Properties
     {
+        _MainTex ("Main Tex", 2D) = "white" { }
         _PixelSize ("Pixel Size", Range(0.0001, 0.1)) = 0.0001
     }
     SubShader

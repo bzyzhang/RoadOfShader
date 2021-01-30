@@ -3,6 +3,7 @@ Shader "RoadOfShader/1.11-PostProcessing/Posterization"
 {
     Properties
     {
+        _MainTex ("Main Tex", 2D) = "white" { }
         _Num("Num", Float) = 8.0
     }
     SubShader
