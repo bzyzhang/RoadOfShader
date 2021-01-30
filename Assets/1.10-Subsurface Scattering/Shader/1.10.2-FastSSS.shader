@@ -4,6 +4,8 @@
     {
         _Diffuse ("Diffuse", Color) = (1, 1, 1, 1)
         _SSSDistortion ("SSS Distortion", Range(0, 1)) = 1
+        _Power ("Power", Float) = 1
+        _Scale ("Scale", Float) = 1
     }
     SubShader
     {
@@ -46,26 +48,28 @@
             CBUFFER_START(UnityPerMaterial)
             half4 _Diffuse;
             half _SSSDistortion;
+            half _Power;
+            half _Scale;
             CBUFFER_END
             
             half3 computeSSS(Light light, float3 normal, float3 viewDir)
             {
                 half3 lightDir = normalize(light.direction);
                 half3 dir = normalize(lightDir + normal * _SSSDistortion);
-                half3 sss = _Diffuse.rgb * light.color * saturate(dot(viewDir, -dir));
-
+                half3 sss = _Diffuse.rgb * light.color * pow(saturate(dot(viewDir, -dir)), _Power) * _Scale;
+                
                 return sss;
             }
-
+            
             half3 LightingBased(Light light, half3 normalWS, half3 viewDirWS)
             {
                 half3 lightDirWS = normalize(light.direction);
                 half diff = saturate(dot(normalWS, lightDirWS));
                 half3 diffuse = light.color * _Diffuse.rgb * diff;
-
+                
                 half3 sss = computeSSS(light, normalWS, viewDirWS);
                 
-                return (diffuse + sss) * light.distanceAttenuation * light.shadowAttenuation;
+                return(diffuse + sss) * light.distanceAttenuation * light.shadowAttenuation;
             }
             
             Varyings vert(Attributes input)
@@ -100,7 +104,7 @@
                 
                 half diff = saturate(dot(normalWS, lightDirWS));
                 half3 diffuse = mainLight.color * _Diffuse.rgb * diff;
-
+                
                 half3 sss = computeSSS(mainLight, normalWS, viewDirWS);
                 
                 half3 finalColor = ambient + diffuse + sss;
@@ -111,7 +115,7 @@
                     Light light = GetAdditionalLight(lightIndex, input.positionWS);
                     finalColor += LightingBased(light, normalWS, viewDirWS);
                 }
-
+                
                 return half4(finalColor, 1.0);
             }
             ENDHLSL

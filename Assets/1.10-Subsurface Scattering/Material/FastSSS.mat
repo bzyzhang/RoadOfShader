@@ -60,9 +60,11 @@ Material:
     - _GlossyReflections: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
+    - _Power: 1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _SSSDistortion: 0.492
+    - _Scale: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
