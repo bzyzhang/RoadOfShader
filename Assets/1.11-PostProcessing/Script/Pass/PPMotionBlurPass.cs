@@ -7,6 +7,8 @@ namespace UnityEngine.Experiemntal.Rendering.Universal
     {
         static readonly string k_RenderTag = "PP Motion Blur";
 
+        private float m_BlurAmount = 0.5f;
+
         private Material m_Material;
 
         RenderTargetIdentifier currentTarget;
@@ -14,8 +16,10 @@ namespace UnityEngine.Experiemntal.Rendering.Universal
 
         private RenderTexture m_LastRT;
 
-        public PPMotionBlurPass()
+        public PPMotionBlurPass(float blurAmount)
         {
+            m_BlurAmount = blurAmount;
+
             var shader = Shader.Find("RoadOfShader/1.11-PostProcessing/Motion Blur");
             m_Material = CoreUtils.CreateEngineMaterial(shader);
         }
@@ -50,6 +54,8 @@ namespace UnityEngine.Experiemntal.Rendering.Universal
             }
 
             m_LastRT.MarkRestoreExpected();
+
+            m_Material.SetFloat("_BlurAmount",m_BlurAmount);
 
             Blit(cmd, source, m_LastRT, m_Material);
             Blit(cmd, m_LastRT, source);
