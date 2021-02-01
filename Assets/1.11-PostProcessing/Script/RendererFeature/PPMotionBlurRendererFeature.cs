@@ -1,18 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine.Experiemntal.Rendering.Universal;
+using UnityEngine.Rendering.Universal;
 
-public class PPMotionBlurRendererFeature : MonoBehaviour
+public class PPMotionBlurRendererFeature : ScriptableRendererFeature
 {
-    // Start is called before the first frame update
-    void Start()
+    public RenderPassEvent PassEvent = RenderPassEvent.BeforeRenderingPostProcessing;
+
+    PPMotionBlurPass m_ScriptablePass;
+
+    public override void Create()
     {
-        
+        m_ScriptablePass = new PPMotionBlurPass()
+        {
+            renderPassEvent = PassEvent
+        };
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
     {
-        
+        var dest = RenderTargetHandle.CameraTarget;
+        m_ScriptablePass.Setup(renderer.cameraColorTarget, dest);
+        renderer.EnqueuePass(m_ScriptablePass);
     }
 }

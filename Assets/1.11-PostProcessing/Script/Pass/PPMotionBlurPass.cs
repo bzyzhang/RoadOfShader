@@ -14,9 +14,10 @@ namespace UnityEngine.Experiemntal.Rendering.Universal
 
         private RenderTexture m_LastRT;
 
-        public PPMotionBlurPass(Material material)
+        public PPMotionBlurPass()
         {
-            m_Material = material;
+            var shader = Shader.Find("RoadOfShader/1.11-PostProcessing/Motion Blur");
+            m_Material = CoreUtils.CreateEngineMaterial(shader);
         }
 
         public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
@@ -41,15 +42,17 @@ namespace UnityEngine.Experiemntal.Rendering.Universal
 
             if (m_LastRT == null || m_LastRT.width != renderingData.cameraData.cameraTargetDescriptor.width || m_LastRT.height != renderingData.cameraData.cameraTargetDescriptor.height)
             {
-                cmd.ReleaseTemporaryRT(m_LastRT.GetNativeTextureID());
-                m_LastRT = new RenderTexture(renderingData.cameraData.cameraTargetDescriptor.width, renderingData.cameraData.cameraTargetDescriptor.height, 0);
-                m_LastRT.hideFlags = HideFlags.HideAndDontSave; //渲染纹理完全由我们脚本控制，Unity不用插手
-                Blit(cmd,source, m_LastRT);
+                Object.DestroyImmediate(m_LastRT);
+                m_LastRT = new RenderTexture(renderingData.cameraData.cameraTargetDescriptor);
+                m_LastRT.hideFlags = HideFlags.HideAndDontSave;
+                Blit(cmd, source, m_LastRT);
+                return;
             }
 
-            m_LastRT.MarkRestoreExpected(); //告诉Unity上一帧的纹理不需要清理
-            Blit(cmd,source, m_LastRT, m_Material);
-            Blit(cmd,m_LastRT, source);
+            m_LastRT.MarkRestoreExpected();
+
+            Blit(cmd, source, m_LastRT, m_Material);
+            Blit(cmd, m_LastRT, source);
         }
 
         public void Setup(in RenderTargetIdentifier currentTarget, RenderTargetHandle dest)
