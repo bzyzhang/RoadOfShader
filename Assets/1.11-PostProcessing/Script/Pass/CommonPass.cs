@@ -12,13 +12,9 @@ namespace UnityEngine.Experiemntal.Rendering.Universal
         RenderTargetIdentifier currentTarget;
         private RenderTargetHandle destination { get; set; }
 
-        private RenderTargetHandle m_TemporaryColorTexture;
-
         public CommonPass(Material material)
         {
             m_Material = material;
-
-            m_TemporaryColorTexture.Init("_TemporaryColorTexture");
         }
 
         public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
@@ -39,18 +35,7 @@ namespace UnityEngine.Experiemntal.Rendering.Universal
         {
             if (renderingData.cameraData.isSceneViewCamera) return;
 
-            cmd.GetTemporaryRT(m_TemporaryColorTexture.id, renderingData.cameraData.cameraTargetDescriptor, FilterMode.Bilinear);
-
-            var source = currentTarget;
-
-            cmd.Blit(source, destination.Identifier(), m_Material);
-        }
-
-        public override void FrameCleanup(CommandBuffer cmd)
-        {
-            base.FrameCleanup(cmd);
-
-            cmd.ReleaseTemporaryRT(m_TemporaryColorTexture.id);
+            cmd.Blit(currentTarget, destination.Identifier(), m_Material);
         }
 
         public void Setup(in RenderTargetIdentifier currentTarget, RenderTargetHandle dest)
