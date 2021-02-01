@@ -9,18 +9,21 @@ public class CommonRendererFeature : ScriptableRendererFeature
 
     CommonPass m_ScriptablePass;
 
+    RenderTargetHandle m_CameraColorAttachment;
+
     public override void Create()
     {
         m_ScriptablePass = new CommonPass(UsedMaterial)
         {
             renderPassEvent = PassEvent
         };
+
+        m_CameraColorAttachment.Init("_CameraColorTexture");
     }
 
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
     {
-        var dest = RenderTargetHandle.CameraTarget;
-        m_ScriptablePass.Setup(renderer.cameraColorTarget, dest);
+        m_ScriptablePass.Setup(renderer.cameraColorTarget, m_CameraColorAttachment);
         renderer.EnqueuePass(m_ScriptablePass);
     }
 }

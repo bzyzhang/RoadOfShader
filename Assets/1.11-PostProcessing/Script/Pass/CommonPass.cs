@@ -43,9 +43,7 @@ namespace UnityEngine.Experiemntal.Rendering.Universal
 
             var source = currentTarget;
 
-            cmd.Blit(source, m_TemporaryColorTexture.Identifier(), m_Material);
-
-            cmd.Blit(m_TemporaryColorTexture.Identifier(),source);
+            cmd.Blit(source, destination.Identifier(), m_Material);
         }
 
         public override void FrameCleanup(CommandBuffer cmd)
