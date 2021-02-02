@@ -1,12 +1,11 @@
-﻿//利用Sobel来根据颜色值进行边缘检测
-//https://www.wikiwand.com/en/Sobel_operator
-//https://www.tutorialspoint.com/dip/sobel_operator.htm
-Shader "RoadOfShader/1.11-PostProcessing/Edge Detection By Sobel"
+﻿Shader "RoadOfShader/1.11-PostProcessing/Edge Detection By Sobel"
 {
     Properties
     {
         _MainTex ("Main Tex", 2D) = "white" { }
-        _Hardness ("Hardness", Range(0, 5)) = 1
+        _EdgeOnly ("Edge Only", Float) = 1.0
+        _EdgeColor ("Edge Color", Color) = (0, 0, 0, 1)
+        _BackgroundColor ("Background Color", Color) = (1, 1, 1, 1)
     }
     SubShader
     {
@@ -50,34 +49,40 @@ Shader "RoadOfShader/1.11-PostProcessing/Edge Detection By Sobel"
             
             CBUFFER_START(UnityPerMaterial)
             float4 _MainTex_TexelSize;
-            half _Hardness;
+            half _EdgeOnly;
+            half4 _EdgeColor;
+            half4 _BackgroundColor;
             CBUFFER_END
             
             TEXTURE2D(_MainTex);    SAMPLER(sampler_MainTex);
             
             half Sobel(float2 uv[9])
             {
-                const half verticalMask[9] = {
+                const half Gx[9] = {
                     - 1, 0, 1,
                     - 2, 0, 2,
                     - 1, 0, 1
                 };
-                const half horizontalMask[9] = {
+                const half Gy[9] = {
                     - 1, -2, -1,
                     0, 0, 0,
                     1, 2, 1
                 };
                 
-                half edgeVertical = 0;
-                half edgeHorizontal = 0;
-                for (int i = 0; i < 9; i ++)
+                
+                half texColor;
+                half edgeX = 0;
+                half edgeY = 0;
+                for (int it = 0; it < 9; it ++)
                 {
-                    half lum = CustomLuminance(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv[i]));
-                    edgeVertical += verticalMask[i] * lum * _Hardness;
-                    edgeHorizontal += horizontalMask[i] * lum * _Hardness;
+                    texColor = CustomLuminance(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv[it]).rgb);
+                    edgeX += texColor * Gx[it];
+                    edgeY += texColor * Gy[it];
                 }
                 
-                return abs(edgeVertical) + abs(edgeHorizontal);
+                half edge = 1 - abs(edgeX) - abs(edgeY);
+                
+                return edge;
             }
             
             Varyings vert(Attributes input)
@@ -97,15 +102,15 @@ Shader "RoadOfShader/1.11-PostProcessing/Edge Detection By Sobel"
                     uv.y = 1 - uv.y; //满足上面两个条件时uv会翻转，因此需要转回来
                 #endif
                 
-                output.uv[0] = uv + _MainTex_TexelSize.xy * float2(-1, -1) ;
-                output.uv[1] = uv + _MainTex_TexelSize.xy * float2(-1, 0) ;
-                output.uv[2] = uv + _MainTex_TexelSize.xy * float2(-1, 1) ;
-                output.uv[3] = uv + _MainTex_TexelSize.xy * float2(0, -1) ;
-                output.uv[4] = uv + _MainTex_TexelSize.xy * float2(0, 0) ;
-                output.uv[5] = uv + _MainTex_TexelSize.xy * float2(0, 1) ;
-                output.uv[6] = uv + _MainTex_TexelSize.xy * float2(1, -1) ;
-                output.uv[7] = uv + _MainTex_TexelSize.xy * float2(1, 0) ;
-                output.uv[8] = uv + _MainTex_TexelSize.xy * float2(1, 1) ;
+                output.uv[0] = uv + _MainTex_TexelSize.xy * half2(-1, -1);
+                output.uv[1] = uv + _MainTex_TexelSize.xy * half2(0, -1);
+                output.uv[2] = uv + _MainTex_TexelSize.xy * half2(1, -1);
+                output.uv[3] = uv + _MainTex_TexelSize.xy * half2(-1, 0);
+                output.uv[4] = uv + _MainTex_TexelSize.xy * half2(0, 0);
+                output.uv[5] = uv + _MainTex_TexelSize.xy * half2(1, 0);
+                output.uv[6] = uv + _MainTex_TexelSize.xy * half2(-1, 1);
+                output.uv[7] = uv + _MainTex_TexelSize.xy * half2(0, 1);
+                output.uv[8] = uv + _MainTex_TexelSize.xy * half2(1, 1);
                 
                 return output;
             }
@@ -115,8 +120,11 @@ Shader "RoadOfShader/1.11-PostProcessing/Edge Detection By Sobel"
                 UNITY_SETUP_INSTANCE_ID(input);
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
                 
-				half edge = Sobel(input.uv);
-				return edge;
+                half edge = Sobel(input.uv);
+                
+                half4 withEdgeColor = lerp(_EdgeColor, SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, input.uv[4]), edge);
+                half4 onlyEdgeColor = lerp(_EdgeColor, _BackgroundColor, edge);
+                return lerp(withEdgeColor, onlyEdgeColor, _EdgeOnly);
             }
             ENDHLSL
             

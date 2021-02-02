@@ -76,7 +76,7 @@
             UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
             
             half4 col = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, input.uv);
-            half val = clamp(CustomLuminance(col) - _LuminanceThreshold, 0.0, 1.0);
+            half val = clamp(CustomLuminance(col.rgb) - _LuminanceThreshold, 0.0, 1.0);
             return col * val;
         }
         

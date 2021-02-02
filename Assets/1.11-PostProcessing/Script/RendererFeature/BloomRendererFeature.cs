@@ -1,19 +1,24 @@
-﻿using UnityEngine.Experiemntal.Rendering.Universal;
+﻿using UnityEngine;
+using UnityEngine.Experiemntal.Rendering.Universal;
 using UnityEngine.Rendering.Universal;
 
 public class BloomRendererFeature : ScriptableRendererFeature
 {
-    public int downSample = 4;
-    public int iterations = 4;
-    public float luminanceThreshold = 0.5f;
-    public int blurSize = 2;
+    [Range(0, 4)]
+    public int iterations = 3;
+    [Range(0.2f, 3.0f)]
+    public float blurSpread = 0.6f;
+    [Range(1, 8)]
+    public int downSample = 2;
+    [Range(0.0f, 4.0f)]
+    public float luminanceThreshold = 0.6f;
     public RenderPassEvent PassEvent = RenderPassEvent.BeforeRenderingPostProcessing;
 
     BloomPass m_ScriptablePass;
 
     public override void Create()
     {
-        m_ScriptablePass = new BloomPass(downSample, iterations, luminanceThreshold, blurSize)
+        m_ScriptablePass = new BloomPass(iterations, blurSpread, downSample, luminanceThreshold)
         {
             renderPassEvent = PassEvent
         };

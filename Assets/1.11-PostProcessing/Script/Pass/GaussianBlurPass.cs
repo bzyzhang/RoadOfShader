@@ -5,8 +5,9 @@ namespace UnityEngine.Experiemntal.Rendering.Universal
 {
     public class GaussianBlurPass : ScriptableRenderPass
     {
-        private int m_DownSample = 4;
-        private int m_Iterations = 1;
+        private int m_Iterations = 3;
+        private float m_BlurSpread = 0.6f;
+        private int m_DownSample = 2;
 
         static readonly string k_RenderTag = "Gaussian Blur";
 
@@ -18,10 +19,11 @@ namespace UnityEngine.Experiemntal.Rendering.Universal
         RenderTargetIdentifier currentTarget;
         private RenderTargetHandle destination { get; set; }
 
-        public GaussianBlurPass(int downSample, int iterations)
+        public GaussianBlurPass(int iterations, float blurSpread, int downSample)
         {
-            m_DownSample = downSample;
             m_Iterations = iterations;
+            m_BlurSpread = blurSpread;
+            m_DownSample = downSample;
 
             var shader = Shader.Find("RoadOfShader/1.11-PostProcessing/Gaussian Blur");
             gaussianBlurMat = CoreUtils.CreateEngineMaterial(shader);
@@ -66,6 +68,8 @@ namespace UnityEngine.Experiemntal.Rendering.Universal
 
             for (int i = 0; i < m_Iterations; i++)
             {
+                gaussianBlurMat.SetFloat("_BlurSize", 1.0f + i * m_BlurSpread);
+
                 Blit(cmd, bufferTex0.Identifier(), bufferTex1.Identifier(), gaussianBlurMat, 0);
 
                 Blit(cmd, bufferTex1.Identifier(), bufferTex0.Identifier(), gaussianBlurMat, 1);

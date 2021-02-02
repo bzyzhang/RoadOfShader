@@ -1,8 +1,10 @@
-﻿using UnityEngine.Experiemntal.Rendering.Universal;
+﻿using UnityEngine;
+using UnityEngine.Experiemntal.Rendering.Universal;
 using UnityEngine.Rendering.Universal;
 
 public class PPMotionBlurRendererFeature : ScriptableRendererFeature
 {
+    [Range(0.0f,0.9f)]
     public  float BlurAmount = 0.5f;
     public RenderPassEvent PassEvent = RenderPassEvent.BeforeRenderingPostProcessing;
 

@@ -5,10 +5,10 @@ namespace UnityEngine.Experiemntal.Rendering.Universal
 {
     public class BloomPass : ScriptableRenderPass
     {
-        private int m_DownSample = 4;
-        private int m_Iterations = 1;
-        private float m_LuminanceThreshold = 0.5f;
-        private int m_BlurSize = 2;
+        private int m_Iterations = 3;
+        private float m_BlurSpread = 0.6f;
+        private int m_DownSample = 2;
+        private float m_LuminanceThreshold = 0.6f;
 
         private const int EXTRACT_PASS = 0;
         private const int GAUSSIAN_HOR_PASS = 1;
@@ -25,12 +25,12 @@ namespace UnityEngine.Experiemntal.Rendering.Universal
         RenderTargetIdentifier currentTarget;
         private RenderTargetHandle destination { get; set; }
 
-        public BloomPass(int downSample, int iterations,float luminanceThreshold,int blurSize)
+        public BloomPass(int iterations, float blurSpread, int downSample, float luminanceThreshold)
         {
-            m_DownSample = downSample;
             m_Iterations = iterations;
+            m_BlurSpread = blurSpread;
+            m_DownSample = downSample;
             m_LuminanceThreshold = luminanceThreshold;
-            m_BlurSize = blurSize;
 
             var shader = Shader.Find("RoadOfShader/1.11-PostProcessing/Bloom");
             bloomMat = CoreUtils.CreateEngineMaterial(shader);
@@ -72,12 +72,13 @@ namespace UnityEngine.Experiemntal.Rendering.Universal
             cmd.GetTemporaryRT(bufferTex1.id, opaqueDesc, FilterMode.Bilinear);
 
             bloomMat.SetFloat("_LuminanceThreshold", m_LuminanceThreshold);
-            bloomMat.SetInt("_BlurSize", m_BlurSize);
 
             Blit(cmd, source, bufferTex0.Identifier(), bloomMat, EXTRACT_PASS);
 
             for (int i = 0; i < m_Iterations; i++)
             {
+                bloomMat.SetFloat("_BlurSize", 1.0f + i * m_BlurSpread);
+
                 Blit(cmd, bufferTex0.Identifier(), bufferTex1.Identifier(), bloomMat, GAUSSIAN_HOR_PASS);
 
                 Blit(cmd, bufferTex1.Identifier(), bufferTex0.Identifier(), bloomMat, GAUSSIAN_VERT_PASS);
