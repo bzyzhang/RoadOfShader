@@ -136,12 +136,12 @@ GameObject:
   - component: {fileID: 1293824845}
   - component: {fileID: 1293824844}
   m_Layer: 0
-  m_Name: MetalSphere
+  m_Name: MetallicSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &1293824844
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -217,7 +217,7 @@ GameObject:
   - component: {fileID: 1677396884}
   - component: {fileID: 1677396883}
   m_Layer: 0
-  m_Name: NonMetalSphere
+  m_Name: SpecularSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
