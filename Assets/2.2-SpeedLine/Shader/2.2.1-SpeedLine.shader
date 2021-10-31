@@ -69,10 +69,10 @@
             {
                 half2 uv = input.uv - _Center.xy;
 
-                half angle = _RotateSpeed * _Time.y;
+                half angle = radians(_RotateSpeed * _Time.y);
 
-                half cosAngle = cos(angle);
-                half sinAngle = sin(angle);
+                half sinAngle, cosAngle;
+                sincos(angle, sinAngle, cosAngle);
 
                 half2x2 rotateMatrix0 = half2x2(cosAngle, -sinAngle, sinAngle, cosAngle);
                 half2 normalizedUV0 = normalize(mul(rotateMatrix0, uv));
