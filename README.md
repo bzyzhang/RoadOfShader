@@ -37,3 +37,5 @@ Unity版本：Unity 2020.1.4f1
 ## 阶段二
 
 1. [简单地实现PBR](https://zhuanlan.zhihu.com/p/353705469)
+2. [速度线效果的实现](https://zhuanlan.zhihu.com/p/427866097)
+
