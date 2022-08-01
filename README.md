@@ -1,6 +1,6 @@
 # Road Of Shader
 
-Unity版本：Unity 2020.1.4f1
+Unity版本：Unity 2021.2.0f1
 
 这里主要记录自己在学习图形学的过程中的一些练手项目，都是通过Unity的新渲染管线URP来实现的。
 
